@@ -2,18 +2,20 @@ const fountain = require('fountain-generator');
 
 module.exports = fountain.Base.extend({
   writing() {
+    this.argument('name', {type: String, required: false});
     const name = this.options.name || 'component';
     const titleCase = string => string.charAt(0).toUpperCase() + string.slice(1);
     const lowerCase = string => string.charAt(0).toLowerCase() + string.slice(1);
-    const path = this.options.dir ? `app/${this.options.dir}` : `app`;
+    const configProps = this.config.get('props') || {};
+    const path = this.options.dir ? `app/${this.options.dir}` : (configProps.componentDir || `app`);
     const props = {
       componentName: lowerCase(name),
       className: titleCase(name),
-      modules: this.config.get('props').modules,
-      js: this.config.get('props').js,
+      modules: configProps.modules,
+      js: configProps.js,
       framework: 'angular1',
       name,
-      templateUrl: this.config.get('props').modules === 'systemjs' ? `src/${path}/${name}.html` : `${path}/${name}.html`,
+      templateUrl: configProps.modules === 'systemjs' ? `src/${path}/${name}.html` : `${path}/${name}.html`,
       relativeTemplateUrl: `./${name}.html`
     };
     this.copyTemplate(`src/app/component.js`, `src/${path}/${name}.js`, props);
