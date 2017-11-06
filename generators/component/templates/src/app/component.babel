@@ -1,3 +1,7 @@
+<% if (modules !== 'inject' && modules !== 'systemjs') { -%>
+import template from '<%- relativeTemplateUrl %>';
+
+<% } -%>
 class <%- className %>Controller {
   constructor() {
     this.text = 'My brand new component!';

@@ -1,8 +1,8 @@
-export const <%- componentName %> = {
+export default {
 <% if (modules === 'systemjs') { -%>
   templateUrl: '<%- templateUrl %>',
 <% } else { -%>
-  template: require('<%- relativeTemplateUrl %>'),
+  template,
 <% } -%>
-  controller: <%- className %>Controller
+  controller: <%- className %>Controller,
 };
